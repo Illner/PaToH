@@ -33,10 +33,18 @@ PATOH_Part = clib.Patoh_Part
 PATOH_Part.argtypes = (ctypes.POINTER(PatohInitializeParameters), ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p)
 PATOH_Free = clib.Patoh_Free
 
+# initializeParameters
 patoh_data.params = PatohInitializeParameters()
 patoh_data.params._k = 2
 ok = PATOH_InitializeParameters(ctypes.byref(patoh_data.params), 1, 0)
 print(f"PATOH_InitializeParameters: {ok}")
 
+# checkUserParameters
 ok = PATOH_checkUserParameters(ctypes.byref(patoh_data.params), 1)
 print(f"PATOH_checkUserParameters: {ok}")
+
+# alloc
+ok = PATOH_Alloc(ctypes.byref(patoh_data.params), patoh_data._c, patoh_data._n, patoh_data._nconst,
+                      patoh_data._cwghts.ctypes, patoh_data._nwghts.ctypes, patoh_data._xpins.ctypes,
+                      patoh_data._pins.ctypes)
+print(f"PATOH_Alloc: {ok}")
