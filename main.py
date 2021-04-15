@@ -1,9 +1,10 @@
-from patoh_initialize_parameters import PatohInitializeParameters
-from patoh_data import PatohData
-
+# Import
 import os
 import ctypes
 from pathlib import Path
+from patoh_initialize_parameters import PatohInitializeParameters
+from patoh_data import PatohData
+
 
 lib_path: Path = Path(os.path.join(os.getcwd(), "Linux", "libpatoh.so"))
 
@@ -44,7 +45,9 @@ ok = PATOH_Part(patoh_data.params_ref(), patoh_data.c, patoh_data.n, patoh_data.
                 patoh_data.targetweights_ctypes(), patoh_data.partvec_ctypes(), patoh_data.partweights_ctypes(), patoh_data.cut_addr())
 print(f"PATOH_Part: {ok}")
 
-print(f"patoh_data.cut: {patoh_data.partvec()}")
+print(f"partvec: {patoh_data.partvec()}")
+print(f"partweights: {patoh_data.partweights()}")
+print(f"cut: {patoh_data.cut}")
 
 # PATOH_Free
 ok = PATOH_Free()

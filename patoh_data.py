@@ -75,6 +75,9 @@ class PatohData:
     def partweights_ctypes(self) -> ctypes:
         return self.__partweights.ctypes
 
+    def partweights(self) -> List[int]:
+        return self.__partweights.tolist()
+
     def cut_addr(self) -> int:
         cut_val = ctypes.c_int(self.__cut)
         return ctypes.addressof(cut_val)
@@ -99,4 +102,8 @@ class PatohData:
     @property
     def useFixCells(self) -> int:
         return self.__useFixCells
+
+    @property
+    def cut(self) -> int:
+        return self.__cut
     # endregion
