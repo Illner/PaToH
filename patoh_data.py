@@ -29,11 +29,11 @@ class PatohData:
         self._partweights = None
 
     def _exportArrays(self):
-        self._cwghts = np.ndarray(self.cwghts, dtype=np.int32)
-        self._nwghts = np.ndarray(self.nwghts, dtype=np.int32)
-        self._xpins = np.ndarray(self.xpins, dtype=np.int32)
-        self._pins = np.ndarray(self.pins, dtype=np.int32)
-        self._partvec = np.ndarray(self.partvec, dtype=np.int32)
+        self._cwghts = np.array(self.cwghts)
+        self._nwghts = np.array(self.nwghts)
+        self._xpins = np.array(self.xpins)
+        self._pins = np.array(self.pins)
+        self._partvec = np.array(self.partvec)
 
-        self._targetweights = np.ndarray(self.targetweights, dtype=np.float32)
-        self._partweights = np.ndarray(self.partweights, dtype=np.int32)
+        self._targetweights = np.ndarray(shape=[2], dtype=np.float32)
+        self._partweights = np.ndarray(shape=[self._c], dtype=np.int32)
