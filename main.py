@@ -26,6 +26,8 @@ patoh_data._exportArrays()
 
 clib = ctypes.cdll.LoadLibrary(str(lib_path))
 
+PATOH_Version = clib.Patoh_VersionStr
+PATOH_Version.restype = (ctypes.c_char_p)
 PATOH_InitializeParameters = clib.Patoh_Initialize_Parameters
 PATOH_InitializeParameters.argtypes = (ctypes.POINTER(PatohInitializeParameters), ctypes.c_int, ctypes.c_int)
 PATOH_checkUserParameters = clib.Patoh_Check_User_Parameters
@@ -35,6 +37,8 @@ PATOH_Alloc.argtypes = (ctypes.POINTER(PatohInitializeParameters), ctypes.c_int,
 PATOH_Part = clib.Patoh_Part
 PATOH_Part.argtypes = (ctypes.POINTER(PatohInitializeParameters), ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_void_p,ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p)
 PATOH_Free = clib.Patoh_Free
+
+print(PATOH_Version().decode('utf-8'))
 
 # initializeParameters
 patoh_data.params = PatohInitializeParameters()
