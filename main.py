@@ -7,7 +7,7 @@ import patoh_sugparam_enum as ps_enum
 from patoh_initialize_parameters import PatohInitializeParameters
 
 
-lib_path: Path = Path(os.path.join(os.getcwd(), "Linux", "libpatoh.so"))
+lib_path: Path = Path(os.path.join(os.getcwd(), "linux", "libpatoh.so"))
 
 xpins_1 = [0, 5, 7, 11, 13, 15, 19, 21, 25, 27, 29, 31]
 pins_1 = [2, 3, 5, 6, 9, 0, 1, 0, 1, 2, 3, 1, 3, 4, 5, 4, 5, 6, 7, 6, 7, 8, 9, 10, 11, 8, 11, 8, 10, 2, 5]
