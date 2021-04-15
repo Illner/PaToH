@@ -20,6 +20,7 @@ patoh_data.xpins = xpins
 patoh_data.pins = pins
 patoh_data.cwghts = cwghts
 patoh_data.nwghts = nwghts
+patoh_data.partvec = [-1] * 12
 
 patoh_data._exportArrays()
 
@@ -63,9 +64,6 @@ print(f"patoh_data.cut: {patoh_data.cut}")
 print(f"patoh_data.cut_val: {cut_val}")
 print(f"patoh_data._partvec: {patoh_data._partvec}")
 print(f"patoh_data._partweights: {patoh_data._partweights}")
-
-for i in range(patoh_data._c):
-    print(patoh_data._partvec[i])
 
 # free
 ok = PATOH_Free()
