@@ -8,15 +8,23 @@ from patoh_data import PatohData
 
 lib_path: Path = Path(os.path.join(os.getcwd(), "Linux", "libpatoh.so"))
 
-xpins = [0, 5, 7, 11, 13, 15, 19, 21, 25, 27, 29, 31]
-pins = [2, 3, 5, 6, 9, 0, 1, 0, 1, 2, 3, 1, 3, 4, 5, 4, 5, 6, 7, 6, 7, 8, 9, 10, 11, 8, 11, 8, 10, 2, 5]
+xpins_1 = [0, 5, 7, 11, 13, 15, 19, 21, 25, 27, 29, 31]
+pins_1 = [2, 3, 5, 6, 9, 0, 1, 0, 1, 2, 3, 1, 3, 4, 5, 4, 5, 6, 7, 6, 7, 8, 9, 10, 11, 8, 11, 8, 10, 2, 5]
+cwghts_1 = [1] * 12
+nwghts_1 = [1] * 11
 
-cwghts = [1] * 12
-nwghts = [1] * 11
+xpins_2 = [0, 2, 6, 9, 12]
+pins_2 = [0, 2, 0, 1, 3, 4, 3, 4, 6, 2, 5, 6]
+cwghts_2 = [1, 2, 3, 4, 5, 6, 7]
+nwghts_2 = [11, 22, 33, 44]
 
-patoh_data: PatohData = PatohData(number_of_nodes=12, number_of_hyperedges=11,
-                                  node_weight_list=cwghts, hyperedge_weight_list=nwghts,
-                                  xpins=xpins, pins=pins)
+# patoh_data: PatohData = PatohData(number_of_nodes=12, number_of_hyperedges=11,
+#                                   node_weight_list=cwghts_1, hyperedge_weight_list=nwghts_1,
+#                                   xpins=xpins_1, pins=pins_1)
+
+patoh_data: PatohData = PatohData(number_of_nodes=7, number_of_hyperedges=4,
+                                  node_weight_list=cwghts_2, hyperedge_weight_list=nwghts_2,
+                                  xpins=xpins_2, pins=pins_2)
 
 clib = ctypes.cdll.LoadLibrary(str(lib_path))
 
