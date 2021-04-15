@@ -57,3 +57,5 @@ cut_addr = ctypes.addressof(cut_val)
 
 ok = PATOH_Part(ctypes.byref(patoh_data.params), patoh_data._c, patoh_data._n, patoh_data._nconst, patoh_data.useFixCells, patoh_data._cwghts.ctypes, patoh_data._nwghts.ctypes, patoh_data._xpins.ctypes, patoh_data._pins.ctypes, patoh_data._targetweights.ctypes, patoh_data._partvec.ctypes, patoh_data._partweights.ctypes, cut_addr)
 print(f"PATOH_Part: {ok}")
+
+print(patoh_data.partvec)
