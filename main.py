@@ -61,7 +61,8 @@ print(f"PATOH_Part: {ok}")
 patoh_data.cut = cut_val
 
 print(f"patoh_data.cut: {patoh_data.cut}")
-print(f"patoh_data.partvec: {patoh_data.partvec}")
+print(f"patoh_data._partvec: {patoh_data._partvec}")
+print(f"patoh_data._partweights: {patoh_data._partweights}")
 
 # free
 ok = PATOH_Free()
