@@ -13,7 +13,7 @@ class PatohData:
         self.partvec = []
         self.useFixCells = 0  # 0 assumes no partitions assigned
         self.cut = 0
-        self.targetweights = []
+        self.targetweights = [0.5, 0.5]
         self.partweights = []
 
         self.params = None
@@ -29,11 +29,11 @@ class PatohData:
         self._partweights = None
 
     def _exportArrays(self):
-        self._cwghts = np.array(self.cwghts)
-        self._nwghts = np.array(self.nwghts)
-        self._xpins = np.array(self.xpins)
-        self._pins = np.array(self.pins)
-        self._partvec = np.array(self.partvec)
+        self._cwghts = np.asanyarray(self.cwghts, dtype=np.int32)
+        self._nwghts = np.asanyarray(self.nwghts, dtype=np.int32)
+        self._xpins = np.asanyarray(self.xpins, dtype=np.int32)
+        self._pins = np.asanyarray(self.pins, dtype=np.int32)
+        self._partvec = np.asanyarray(self.partvec, dtype=np.int32)
 
-        self._targetweights = np.ndarray(shape=[2], dtype=np.float32)
-        self._partweights = np.ndarray(shape=[self._c], dtype=np.int32)
+        self._targetweights = np.asanyarray(self.targetweights, dtype=np.float32)
+        self._partweights = np.asanyarray(self.partweights, dtype=np.int32)
