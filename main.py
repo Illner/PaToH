@@ -36,4 +36,7 @@ PATOH_Free = clib.Patoh_Free
 patoh_data.params = PatohInitializeParameters()
 patoh_data.params._k = 2
 ok = PATOH_InitializeParameters(ctypes.byref(patoh_data.params), 1, 0)
-print(ok)
+print(f"PATOH_InitializeParameters: {ok}")
+
+ok = PATOH_checkUserParameters(ctypes.byref(patoh_data.params), 1)
+print(f"PATOH_checkUserParameters: {ok}")
