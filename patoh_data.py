@@ -24,6 +24,8 @@ class PatohData:
     Private ndarray partvec         # stores the part number of each cell belong to
     Private ndarray partweights     # the total part weight of each part
     Private int cut                 # cut size of the solution
+    
+    Private PatohInitializeParameters parameters
     """
 
     def __init__(self, number_of_nodes: int, number_of_hyperedges: int,
@@ -41,15 +43,15 @@ class PatohData:
         self.__targetweights: np.ndarray = np.array([0.5, 0.5], dtype=np.float32)
 
         # Output
-        self.__partvec: np.ndarray = np.array([-1] * self.__c, dtype=np.int32)
+        self.__partvec: np.ndarray = np.array([-1] * self.c, dtype=np.int32)
         self.__partweights: np.ndarray = np.array([0, 0], dtype=np.int32)
         self.__cut: int = 0
-        self.__cut_val = ctypes.c_int(self.__cut)
+        self.__cut_ctypes = ctypes.c_int(self.__cut)
 
         # Parameter
-        self.__params: PatohInitializeParameters = PatohInitializeParameters()
-        self.__params._k = 2
-        self.__params.seed = -1
+        self.__parameters: PatohInitializeParameters = PatohInitializeParameters()
+        self.__parameters._k = 2
+        self.__parameters.seed = -1     # random seed
 
     # region Public method
     def cwghts_ctypes(self) -> ctypes:
@@ -80,10 +82,10 @@ class PatohData:
         return self.__partweights.tolist()
 
     def cut_addr(self) -> int:
-        return ctypes.addressof(self.__cut_val)
+        return ctypes.addressof(self.__cut_ctypes)
 
-    def params_ref(self):
-        return ctypes.byref(self.__params)
+    def parameters_ref(self):
+        return ctypes.byref(self.__parameters)
     # endregion
 
     # region Property
@@ -105,5 +107,5 @@ class PatohData:
 
     @property
     def cut(self) -> int:
-        return self.__cut_val.value
+        return self.__cut_ctypes.value
     # endregion

@@ -2,8 +2,9 @@
 import os
 import ctypes
 from pathlib import Path
-from patoh_initialize_parameters import PatohInitializeParameters
 from patoh_data import PatohData
+import patoh_sugparam_enum as ps_enum
+from patoh_initialize_parameters import PatohInitializeParameters
 
 
 lib_path: Path = Path(os.path.join(os.getcwd(), "Linux", "libpatoh.so"))
@@ -31,32 +32,31 @@ clib = ctypes.cdll.LoadLibrary(str(lib_path))
 PATOH_InitializeParameters = clib.Patoh_Initialize_Parameters
 PATOH_InitializeParameters.argtypes = (ctypes.POINTER(PatohInitializeParameters), ctypes.c_int, ctypes.c_int)
 PATOH_Alloc = clib.Patoh_Alloc
-PATOH_Alloc.argtypes = (ctypes.POINTER(PatohInitializeParameters), ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_void_p, ctypes.c_void_p,ctypes.c_void_p, ctypes.c_void_p)
+PATOH_Alloc.argtypes = (ctypes.POINTER(PatohInitializeParameters), ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p)
 PATOH_Part = clib.Patoh_Part
-PATOH_Part.argtypes = (ctypes.POINTER(PatohInitializeParameters), ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_void_p,ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p)
+PATOH_Part.argtypes = (ctypes.POINTER(PatohInitializeParameters), ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p)
 PATOH_Free = clib.Patoh_Free
 
 # PATOH_InitializeParameters
-# ok = PATOH_InitializeParameters(patoh_data.params_ref(), 2, 1)
-ok = PATOH_InitializeParameters(patoh_data.params_ref(), 2, 2)
+ok = PATOH_InitializeParameters(patoh_data.parameters_ref(), 2, ps_enum.PatohSugparamEnum.PATOH_SUGPARAM_QUALITY.value)
 print(f"PATOH_InitializeParameters: {ok}")
 
 # PATOH_Alloc
-ok = PATOH_Alloc(patoh_data.params_ref(), patoh_data.c, patoh_data.n, patoh_data.nconst,
+ok = PATOH_Alloc(patoh_data.parameters_ref(), patoh_data.c, patoh_data.n, patoh_data.nconst,
                  patoh_data.cwghts_ctypes(), patoh_data.nwghts_ctypes(),
                  patoh_data.xpins_ctypes(), patoh_data.pins_ctypes())
 print(f"PATOH_Alloc: {ok}")
 
 # PATOH_Part
-ok = PATOH_Part(patoh_data.params_ref(), patoh_data.c, patoh_data.n, patoh_data.nconst, patoh_data.useFixCells,
+ok = PATOH_Part(patoh_data.parameters_ref(), patoh_data.c, patoh_data.n, patoh_data.nconst, patoh_data.useFixCells,
                 patoh_data.cwghts_ctypes(), patoh_data.nwghts_ctypes(),
                 patoh_data.xpins_ctypes(), patoh_data.pins_ctypes(),
                 patoh_data.targetweights_ctypes(), patoh_data.partvec_ctypes(), patoh_data.partweights_ctypes(), patoh_data.cut_addr())
 print(f"PATOH_Part: {ok}")
 
+print(f"cut: {patoh_data.cut}")
 print(f"partvec: {patoh_data.partvec()}")
 print(f"partweights: {patoh_data.partweights()}")
-print(f"cut: {patoh_data.cut}")
 
 # PATOH_Free
 ok = PATOH_Free()
