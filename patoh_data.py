@@ -29,7 +29,7 @@ class PatohData:
     def __init__(self, number_of_nodes: int, number_of_hyperedges: int,
                  node_weight_list: List[int], hyperedge_weight_list: List[int],
                  xpins: List[int], pins: List[int]):
-        # Inputs
+        # Input
         self.__c: int = number_of_nodes
         self.__n: int = number_of_hyperedges
         self.__nconst: int = 1
@@ -40,12 +40,13 @@ class PatohData:
         self.__pins: np.ndarray = np.array(pins, dtype=np.int32)
         self.__targetweights: np.ndarray = np.array([0.5, 0.5], dtype=np.float32)
 
-        # Outputs
+        # Output
         self.__partvec: np.ndarray = np.array([-1] * self.__c, dtype=np.int32)
         self.__partweights: np.ndarray = np.array([0, 0], dtype=np.int32)
         self.__cut: int = 0
+        self.__cut_val = ctypes.c_int(self.__cut)
 
-        # Parameters
+        # Parameter
         self.__params: PatohInitializeParameters = PatohInitializeParameters()
         self.__params._k = 2
         self.__params.seed = -1
@@ -79,8 +80,7 @@ class PatohData:
         return self.__partweights.tolist()
 
     def cut_addr(self) -> int:
-        cut_val = ctypes.c_int(self.__cut)
-        return ctypes.addressof(cut_val)
+        return ctypes.addressof(self.__cut_val)
 
     def params_ref(self):
         return ctypes.byref(self.__params)
@@ -105,5 +105,5 @@ class PatohData:
 
     @property
     def cut(self) -> int:
-        return self.__cut
+        return self.__cut_val.value
     # endregion
