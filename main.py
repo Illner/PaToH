@@ -38,6 +38,7 @@ PATOH_Free = clib.Patoh_Free
 # initializeParameters
 patoh_data.params = PatohInitializeParameters()
 patoh_data.params._k = 2
+patoh_data.params.seed = -1
 ok = PATOH_InitializeParameters(ctypes.byref(patoh_data.params), 1, 0)
 print(f"PATOH_InitializeParameters: {ok}")
 
@@ -67,3 +68,5 @@ print(f"patoh_data._partweights: {patoh_data._partweights}")
 # free
 ok = PATOH_Free()
 print(f"PATOH_Free: {ok}")
+
+del patoh_data
