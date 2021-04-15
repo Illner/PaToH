@@ -22,3 +22,18 @@ patoh_data.cwghts = cwghts
 patoh_data.nwghts = nwghts
 
 clib = ctypes.cdll.LoadLibrary(str(lib_path))
+
+PATOH_InitializeParameters = clib.Patoh_Initialize_Parameters
+PATOH_InitializeParameters.argtypes = (ctypes.POINTER(PatohInitializeParameters), ctypes.c_int, ctypes.c_int)
+PATOH_checkUserParameters = clib.Patoh_Check_User_Parameters
+PATOH_checkUserParameters.argtypes = (ctypes.POINTER(PatohInitializeParameters), ctypes.c_int)
+PATOH_Alloc = clib.Patoh_Alloc
+PATOH_Alloc.argtypes = (ctypes.POINTER(PatohInitializeParameters), ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p)
+PATOH_Part = clib.Patoh_Part
+PATOH_Part.argtypes = (ctypes.POINTER(PatohInitializeParameters), ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p)
+PATOH_Free = clib.Patoh_Free
+
+patoh_data.params = PatohInitializeParameters()
+patoh_data.params._k = 2
+ok = PATOH_InitializeParameters(ctypes.byref(patoh_data.params), 1, 0)
+print(ok)
