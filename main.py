@@ -37,7 +37,8 @@ PATOH_Part.argtypes = (ctypes.POINTER(PatohInitializeParameters), ctypes.c_int, 
 PATOH_Free = clib.Patoh_Free
 
 # PATOH_InitializeParameters
-ok = PATOH_InitializeParameters(patoh_data.params_ref(), 2, 1)
+# ok = PATOH_InitializeParameters(patoh_data.params_ref(), 2, 1)
+ok = PATOH_InitializeParameters(patoh_data.params_ref(), 2, 2)
 print(f"PATOH_InitializeParameters: {ok}")
 
 # PATOH_Alloc
