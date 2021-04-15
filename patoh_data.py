@@ -1,39 +1,102 @@
+# Import
+import ctypes
 import numpy as np
+from typing import List
+from patoh_initialize_parameters import PatohInitializeParameters
 
 
 class PatohData:
-    def __init__(self):
-        self._c = None
-        self._n = None
-        self._nconst = 1
-        self.cwghts = []
-        self.nwghts = []
-        self.xpins = []
-        self.pins = []
-        self.partvec = []
-        self.useFixCells = 0  # 0 assumes no partitions assigned
-        self.cut = 0
-        self.targetweights = [0.5, 0.5]
-        self.partweights = [0, 0]
+    """
+    PaToH data representation
+    """
 
-        self.params = None
+    """
+    Private int c                   # number of cells of the hypergraph
+    Private int n                   # number of nets of the hypergraph
+    Private int nconst              # number of constraints
+    Private int useFixCells         # pre-assigned cells
+    Private ndarray cwghts          # stores the weights of each cell
+    Private ndarray nwghts          # stores the cost of each net
+    Private ndarray xpins           # stores the beginning index of pins (cells) connected to nets
+    Private ndarray pins            # stores the pin-lists of nets
+    Private ndarray targetweights   # array with target part weights
+    
+    Private ndarray partvec         # stores the part number of each cell belong to
+    Private ndarray partweights     # the total part weight of each part
+    Private int cut                 # cut size of the solution
+    """
 
-        # exported arrays
-        self._cwghts = None
-        self._nwghts = None
-        self._xpins = None
-        self._pins = None
-        self._partvec = None
+    def __init__(self, number_of_nodes: int, number_of_hyperedges: int,
+                 node_weight_list: List[int], hyperedge_weight_list: List[int],
+                 xpins: List[int], pins: List[int]):
+        # Inputs
+        self.__c: int = number_of_nodes
+        self.__n: int = number_of_hyperedges
+        self.__nconst: int = 1
+        self.__useFixCells: int = 0     # no partitions assigned
+        self.__cwghts: np.ndarray = np.array(node_weight_list, dtype=np.int32)
+        self.__nwghts: np.ndarray = np.array(hyperedge_weight_list, dtype=np.int32)
+        self.__xpins: np.ndarray = np.array(xpins, dtype=np.int32)
+        self.__pins: np.ndarray = np.array(pins, dtype=np.int32)
+        self.__targetweights: np.ndarray = np.array([0.5, 0.5], dtype=np.float32)
 
-        self._targetweights = None
-        self._partweights = None
+        # Outputs
+        self.__partvec: np.ndarray = np.array([-1] * self.__c, dtype=np.int32)
+        self.__partweights: np.ndarray = np.array([0, 0], dtype=np.int32)
+        self.__cut: int = 0
 
-    def _exportArrays(self):
-        self._cwghts = np.array(self.cwghts, dtype=np.int32)
-        self._nwghts = np.array(self.nwghts, dtype=np.int32)
-        self._xpins = np.array(self.xpins, dtype=np.int32)
-        self._pins = np.array(self.pins, dtype=np.int32)
-        self._partvec = np.array(self.partvec, dtype=np.int32)
+        # Parameters
+        self.__params: PatohInitializeParameters = PatohInitializeParameters()
+        self.__params._k = 2
+        self.__params.seed = -1
 
-        self._targetweights = np.array(self.targetweights, dtype=np.float32)
-        self._partweights = np.array(self.partweights, dtype=np.int32)
+    # region Public method
+    def cwghts_ctypes(self) -> ctypes:
+        return self.__cwghts.ctypes
+
+    def nwghts_ctypes(self) -> ctypes:
+        return self.__nwghts.ctypes
+
+    def xpins_ctypes(self) -> ctypes:
+        return self.__xpins.ctypes
+
+    def pins_ctypes(self) -> ctypes:
+        return self.__pins.ctypes
+
+    def targetweights_ctypes(self) -> ctypes:
+        return self.__targetweights.ctypes
+
+    def partvec_ctypes(self) -> ctypes:
+        return self.__partvec.ctypes
+
+    def partvec(self) -> List[int]:
+        return self.__partvec.tolist()
+
+    def partweights_ctypes(self) -> ctypes:
+        return self.__partweights.ctypes
+
+    def cut_addr(self) -> int:
+        cut_val = ctypes.c_int(self.__cut)
+        return ctypes.addressof(cut_val)
+
+    def params_ref(self):
+        return ctypes.byref(self.__params)
+    # endregion
+
+    # region Property
+    @property
+    def c(self) -> int:
+        return self.__c
+
+    @property
+    def n(self) -> int:
+        return self.__n
+
+    @property
+    def nconst(self) -> int:
+        return self.__nconst
+
+    @property
+    def useFixCells(self) -> int:
+        return self.__useFixCells
+    # endregion
