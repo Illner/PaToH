@@ -1,8 +1,8 @@
+# Import
 import ctypes
 
 
 class PatohInitializeParameters(ctypes.Structure):
-
     _fields_ = [
         ("cuttype", ctypes.c_int),
         ("_k", ctypes.c_int),
