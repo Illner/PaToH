@@ -14,7 +14,7 @@ class PatohData:
         self.useFixCells = 0  # 0 assumes no partitions assigned
         self.cut = 0
         self.targetweights = [0.5, 0.5]
-        self.partweights = []
+        self.partweights = [0, 0]
 
         self.params = None
 
